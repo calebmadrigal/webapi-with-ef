@@ -25,6 +25,14 @@ namespace WebApiEfDemo
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            var json = config.Formatters.JsonFormatter;
+            json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+
+            // Remove CamelCase Formatting
+            //var jsonStyleFormatter = config.Formatters.OfType<JsonContract>();
+            //jsonStyleFormatter.SerializerSettings.Contract
         }
     }
 }

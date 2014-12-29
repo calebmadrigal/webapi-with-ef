@@ -1,7 +1,7 @@
 ﻿using System;
 namespace WebApiEfDemo.Models
 {
-    interface IRepository
+    public interface IRepository
     {
         System.Linq.IQueryable<Order> GetAllOrders();
         System.Linq.IQueryable<Order> GetAllOrdersWithDetails();

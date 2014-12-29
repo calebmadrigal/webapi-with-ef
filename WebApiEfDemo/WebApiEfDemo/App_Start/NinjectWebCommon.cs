@@ -11,6 +11,8 @@ namespace WebApiEfDemo.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using WebApiEfDemo.Models;
+    using System.Web.Http;
+    using WebApiContrib.IoC.Ninject;
 
     public static class NinjectWebCommon 
     {
@@ -45,6 +47,9 @@ namespace WebApiEfDemo.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+
+                // Web API
+                GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver(kernel);
 
                 RegisterServices(kernel);
                 return kernel;
