@@ -12,7 +12,7 @@ using WebApiEfDemo.Models;
 
 namespace WebApiEfDemo.Controllers
 {
-    public class BooksController : ApiController
+    public class BookController : ApiController
     {
         private WebApiEfDemoContext db = new WebApiEfDemoContext();
 

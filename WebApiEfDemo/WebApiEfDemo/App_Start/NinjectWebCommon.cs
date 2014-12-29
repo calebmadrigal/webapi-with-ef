@@ -62,7 +62,9 @@ namespace WebApiEfDemo.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IRepository>().To<Repository>();
+            // InRequestScope => Singletons
+            kernel.Bind<IRepository>().To<Repository>().InRequestScope();
+            kernel.Bind<WebApiEfDemoContext>().To<WebApiEfDemoContext>().InRequestScope();
         }        
     }
 }
