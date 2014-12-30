@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Breeze.ContextProvider;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Linq;
 namespace WebApiEfDemo.Models
 {
     public interface IRepository
     {
-        System.Linq.IQueryable<Order> GetAllOrders();
-        System.Linq.IQueryable<Order> GetAllOrdersWithDetails();
-        Order GetOrder(int id);
+        string MetaData { get; }
+        SaveResult SaveChanges(JObject saveBundle);
+
+        IQueryable<Book> Books();
+        IQueryable<Order> Orders();
     }
 }

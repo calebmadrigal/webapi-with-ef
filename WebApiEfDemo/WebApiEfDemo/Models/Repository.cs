@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Breeze.ContextProvider.EF6;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,27 +8,26 @@ namespace WebApiEfDemo.Models
 {
     public class Repository : WebApiEfDemo.Models.IRepository
     {
-        private WebApiEfDemoContext db;
+        private readonly EFContextProvider<WebApiEfDemoContext> _contextProvider = new EFContextProvider<WebApiEfDemoContext>();
 
-        public Repository(WebApiEfDemoContext db)
+        public string MetaData
         {
-            this.db = db;
+            get { return _contextProvider.Metadata(); }
         }
 
-        public IQueryable<Order> GetAllOrders()
+        public Breeze.ContextProvider.SaveResult SaveChanges(Newtonsoft.Json.Linq.JObject saveBundle)
         {
-            return db.Orders;
+            return _contextProvider.SaveChanges(saveBundle);
         }
 
-        public IQueryable<Order> GetAllOrdersWithDetails()
+        public IQueryable<Book> Books()
         {
-            return db.Orders.Include("OrderDetails");
+            return _contextProvider.Context.Books;
         }
 
-        public Order GetOrder(int id)
+        public IQueryable<Order> Orders()
         {
-            return db.Orders.Include("OrderDetails.Book")
-                .FirstOrDefault(o => o.Id == id);
+            return _contextProvider.Context.Orders;
         }
     }
 }
